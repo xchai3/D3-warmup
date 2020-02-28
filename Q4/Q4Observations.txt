@@ -1,0 +1,6 @@
+i.rows: 47
+ii.columns:5
+iii.function: ngam-fingerprint
+iv.GREL_brandname:if(value==null,'Unbranded',value)
+v.GREL_highpriced:if(toNumber(cells["price"].value)<100,0,1)
+vi.GREL_hasoffer:if(or(contains(toLowercase(cells["item_description"].value),"offer"),contains(toLowercase(cells["item_description"].value),"discount") ,contains(toLowercase(cells["item_description"].value),"sale")),1,0)

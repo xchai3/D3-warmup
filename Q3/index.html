@@ -1,0 +1,116 @@
+ <!DOCTYPE html>
+<html lang="en"> <head>
+<meta charset="utf-8">
+<title>Lego Sets by Year from Rebrickable</title>
+<script type="text/javascript" src="lib/d3/d3.min.js"></script>
+     <script type="text/javascript" src="lib/d3-fetch/d3-fetch.min.js"></script>
+     <style type="text/css">
+
+		</style>
+        </head>
+        <body>
+<script type="text/javascript">
+// Your beautiful D3 code will go here
+//Width and height
+			var w = 1430;
+			var h = 650;
+			var barPadding = 1;
+var rowConverter = function(d) { return {
+year: d.year=+d.year,
+running_total:running_total=+d.running_total
+        };
+}
+var running_total=[];
+running_total.push(0);
+var year=[];
+var year2=[]
+year.push(1948);
+year2.push("1948");
+var dataset=[];
+d3.csv("q3.csv",function(data){
+var x=+data.year;
+var y=+data.running_total;
+var z=data.year;
+year.push(x);
+running_total.push(y);
+year2.push(z)
+var i=year.length-1;
+console.log(year2);
+//Create SVG element
+if(year.length==70){
+dataset=running_total;
+console.log(running_total);
+console.log(dataset.length);
+			var svg = d3.select("body")
+						.append("svg")
+						.attr("width", w)
+						.attr("height",h);
+//created a SVG
+var padding=1;
+
+var parseTime = d3.timeParse("%Y");
+year2=parseTime(year2)
+<!--var xScaleT = d3.scaleTime().domain([d3.min(year, function(d) { return year; }),d3.max(year, function(d) { return year; }) ])-->
+<!--.range([padding, w - padding]);-->
+var xScale=d3.scaleLinear().domain([1948,d3.max(year,function(d){return d;})]).range([0,w-padding]);
+
+
+var yScale=d3.scaleLinear().domain([0,d3.max(dataset,function(d){return d;})]).range([0,0.9*h-2*padding]);
+var yScale2=d3.scaleLinear().domain([0,d3.max(dataset,function(d){return d;})]).range([0.9*h-2*padding,0]);
+
+var xAxis = d3.axisBottom(xScale).ticks(23);
+<!--var xAxis = d3.axisBottom().scale(xScaleT).ticks(15); // TImescale-->
+svg.append("g").attr("class", "axis").attr("transform", "translate(0," + 585 +")").call(xAxis);
+
+var yAxis = d3.axisLeft().scale(yScale2).ticks(20);
+svg.append("g").attr("class", "axis").attr("transform", "translate(" + 42+ ",0)").call(yAxis);
+
+// set the title
+svg.append("text")
+        .attr("x", (w/2))
+        .attr("y", 0.029*h)
+        .attr("text-anchor", "middle")
+        .style("font-size", "27px")
+        .text("Sample Data by Year from Sample DB");
+
+
+svg.append("text")
+        .attr("x",0.98*w)
+        .attr("y",h)
+        .attr("text-anchor", "middle")
+        .style("font-size", "16px")
+        .text("xchai30");
+// plot the bar chart
+
+			var rect = svg.selectAll("rect")
+			.data(dataset)
+			    .enter()
+			    .append("rect");
+			rect.attr("x", 0)
+       .attr("y",0)
+       .attr("width", 20)
+       .attr("height",10)
+       .attr("fill", "teal")
+       .attr("x", function(d, i) {
+return i *(w/(dataset.length));// the distance between two columns
+})
+.attr("y", function(d) {
+return (0.9*h - yScale(d)); //Height minus data value
+})
+.attr("height", function(d) {
+return yScale(d); // linear scale the running_total
+})
+
+
+}//
+}
+);
+
+
+
+
+
+
+            </script>
+        </body>
+</html>
